@@ -420,14 +420,12 @@ mode "$mode_gaps_outer" {
 exec --no-startup-id ~/.screenlayout/layout.sh
 exec --no-startup-id pasystray
 
-# PulseAudio Controls (Recommended)
-# Volume Up + Notification
+# PulseAudio Controls
+# - Volume Up + Notification
+# - Volume Down + Notification
+# - Mute + Notification
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && dunstify -h int:value:"$(pactl get-sink-volume @DEFAULT_SINK@ | grep -Po '[0-9]+(?=%)' | head -n 1)" -i audio-volume-high -r 2593 -t 1000 "Volume Up"
-
-# Volume Down + Notification
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% && dunstify -h int:value:"$(pactl get-sink-volume @DEFAULT_SINK@ | grep -Po '[0-9]+(?=%)' | head -n 1)" -i audio-volume-low -r 2593 -t 1000 "Volume Down"
-
-# Mute + Notification
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && dunstify -i audio-volume-muted -r 2593 -t 1000 "Mute Toggle"
 
 # Add printscreen keybind
