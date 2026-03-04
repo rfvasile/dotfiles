@@ -55,3 +55,6 @@
 
 ;; TODO(atom): this may be done implicitly
 ;; (package! py-isort)
+
+(package! gptel-autocomplete
+  :recipe (:host github :repo "JDNdeveloper/gptel-autocomplete"))

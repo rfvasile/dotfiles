@@ -102,3 +102,41 @@
 ;; ----- Python settings -----
 ;; Auto-format file on save
 (setq-hook! '(python-mode-hook python-ts-mode-hook) +format-with '(isort))
+
+;; ----- Other settings -----
+;; LLM selection
+;; LLM auto-completion support
+(after! gptel
+  ;; Backend to use: copilot, gemini
+  (defvar my/gptel-backend "copilot")
+
+  ;; Register and set Copilot as the backend
+  (setq gptel-backend
+        (pcase (downcase my/gptel-backend)
+          ("gemini"
+           (setq gptel-api-key (getenv "GEMINI_API_KEY"))
+           (gptel-make-gemini "Gemini"))
+          ("copilot"
+           (require 'gptel-gh)
+           (gptel-make-gh-copilot "Copilot"))
+          (_
+           (error "Invalid my/gptel-backend: %s (use \"copilot\" or \"gemini\")"
+                  my/gptel-backend))))
+
+  ;; Configure autocomplete
+  (use-package! gptel-autocomplete
+    :after gptel
+    :hook ((python-mode . gptel-autocomplete-mode)
+           (python-ts-mode . gptel-autocomplete-mode))
+    :config
+    (setq gptel-autocomplete-idle-delay 0.5))
+
+
+  ;; Add autocomplete keybindings
+  (map! :leader
+        :prefix ("o" . "open")
+        (:prefix ("l" . "llm")
+         :desc "Complete at point"     "c" #'gptel-complete
+         :desc "Accept completion"     "C" #'gptel-accept-completion
+         :desc "Accept word"           "w" #'gptel-accept-word
+         :desc "Toggle autocomplete"   "t" #'gptel-autocomplete-mode)))
