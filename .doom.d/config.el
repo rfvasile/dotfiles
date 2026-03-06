@@ -110,12 +110,12 @@
   ;; Backend to use: copilot, gemini
   (defvar my/gptel-backend "copilot")
 
-  ;; Register and set Copilot as the backend
+  ;; Register and set Copilot/Gemini as the backend
   (setq gptel-backend
         (pcase (downcase my/gptel-backend)
           ("gemini"
            (setq gptel-api-key (getenv "GEMINI_API_KEY"))
-           (gptel-make-gemini "Gemini"))
+           (gptel-make-gemini "Gemini" :key gptel-api-key))
           ("copilot"
            (require 'gptel-gh)
            (gptel-make-gh-copilot "Copilot"))
