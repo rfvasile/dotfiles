@@ -126,8 +126,8 @@
   ;; Configure autocomplete
   (use-package! gptel-autocomplete
     :after gptel
-    :hook ((python-mode . gptel-autocomplete-mode)
-           (python-ts-mode . gptel-autocomplete-mode))
+    ;; :hook ((python-mode . gptel-autocomplete-mode)
+    ;;        (python-ts-mode . gptel-autocomplete-mode))
     :config
     (setq gptel-autocomplete-idle-delay 0.5))
 
