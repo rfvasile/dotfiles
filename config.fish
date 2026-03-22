@@ -4,4 +4,4 @@ end
 
 alias rm='trash-put'
 set -x GPTEL_BACKEND "gemini"
-set -x GEMINI_API_KEY "not-set"
+set -x GEMINI_API_KEY "[TODO] set"
