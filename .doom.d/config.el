@@ -155,3 +155,8 @@
   ;; configuration guide:
   ;; https://github.com/KarimAziev/igist?tab=readme-ov-file#secure-way-using-auth-sources
   (setq igist-auth-marker 'igist))
+
+(map! :after evil-markdown
+      :map evil-markdown-mode-map
+      :i "M-b" #'backward-word)
+
