@@ -99,18 +99,17 @@
 
 (global-auto-revert-mode 1)
 
-;; ----- Python settings -----
-;; TEMPORARY: Manjaro stable currently ships Emacs 30.2-2 with a
-;; tree-sitter/python-ts-mode font-lock regression. Keep Python on classic
-;; `python-mode` until the fixed Emacs package 30.2-3 lands.
-(after! python
-  (put 'python-mode '+tree-sitter nil)
-  (setq major-mode-remap-alist
-        (assq-delete-all 'python-mode major-mode-remap-alist)))
-
 ;; Auto-format file on save
 (setq-hook! '(python-mode-hook python-ts-mode-hook) +format-with '(isort))
 
+;; (add-hook! '(python-mode-hook python-ts-mode-hook)
+;;   (add-hook 'after-save-hook #'+python/optimize-imports nil t))
+
+;; Add ruff type checker
+(map! :leader
+      (:prefix ("c" . "code")
+       :desc "Run ruff check" "R" #'(lambda () (interactive)
+                                      (compile (format "ruff check %s" (doom-project-root))))))
 (after! python
   (map! :localleader
         :map python-base-mode-map
@@ -167,3 +166,4 @@
 (map! :after evil-markdown
       :map evil-markdown-mode-map
       :i "M-b" #'backward-word)
+
