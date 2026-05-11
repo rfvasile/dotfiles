@@ -99,11 +99,10 @@
 
 (global-auto-revert-mode 1)
 
-;; Auto-format file on save
-(setq-hook! '(python-mode-hook python-ts-mode-hook) +format-with '(isort))
-
-;; (add-hook! '(python-mode-hook python-ts-mode-hook)
-;;   (add-hook 'after-save-hook #'+python/optimize-imports nil t))
+;; Auto-format file and remove unused imports on save
+(add-hook! '(python-mode-hook python-ts-mode-hook)
+  (setq-hook! '(python-mode-hook python-ts-mode-hook) +format-with '(isort))
+  (add-hook 'before-save-hook #'pyimport-remove-unused nil t))
 
 ;; Add ruff type checker
 (map! :leader
